@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Google Play Giveaway - Official</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        :root { --accent: #2563eb; }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: radial-gradient(circle at top, #ff9a9e 0%, #fecfef 100%);
+            margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; 
+            color: #1a1a1a; min-height: 100vh; overflow-x: hidden;
+        }
+
+        .top-nav { width: 100%; padding: 12px 0; background: rgba(255, 255, 255, 0.3); border-bottom: 1px solid rgba(255,255,255,0.2); text-align: center; backdrop-filter: blur(5px); }
+        .nav-banner { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: 100px; background: #fff; border: 1px solid rgba(255, 105, 180, 0.3); }
+        .nav-banner h1 { font-size: 11px; font-weight: 800; color: #ff4757; text-transform: uppercase; letter-spacing: 0.5px; margin: 0; }
+
+        .container { width: 100%; max-width: 1100px; padding: 10px 12px; }
+
+        .grid { display: grid; gap: 12px; margin-bottom: 30px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; } }
+
+        .card { background: #ffffff; border-radius: 22px; padding: 22px 15px; text-align: center; border: 1px solid rgba(255,255,255,0.5); display: flex; flex-direction: column; min-height: 180px; height: 100%; transition: 0.3s; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 105, 180, 0.1); }
+        .card:hover { transform: translateY(-5px); border-color: #ff4757; }
+        .card-content { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .card img { width: 65px; height: 65px; margin-bottom: 15px; border-radius: 12px; }
+        .card h3 { font-weight: 800; font-size: 14px; color: #333; margin-bottom: 15px; }
+        
+        /* Adjusted font size for clarity without being too big */
+        .btn-green { 
+            margin-top: auto; 
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); 
+            color: white; 
+            border: none; 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 12px; 
+            font-weight: 800; 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }
+
+        .share-box { background: rgba(30, 41, 59, 0.85); border-radius: 25px; padding: 35px 20px; margin: 20px auto; max-width: 550px; width: 100%; border: 1px solid rgba(255,255,255,0.1); text-align: center; backdrop-filter: blur(10px); color: #fff; }
+        .prog-container { background: #0f172a; height: 12px; border-radius: 50px; margin: 20px 0 10px; overflow: hidden; }
+        .prog-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: 0.6s ease; }
+        .btn-wa { background: #25d366; color: white; width: 100%; padding: 16px; border-radius: 18px; margin-top: 15px; font-weight: 800; border: none; cursor: pointer; text-transform: uppercase; font-size: 14px; }
+
+        .main-footer { padding: 40px 15px 20px; text-align: center; color: #4b5563; }
+        .footer-links { margin-bottom: 15px; }
+        .footer-links a { color: #1e3799; text-decoration: none; font-size: 11px; font-weight: 700; margin: 0 8px; }
+        .footer-copyright { font-size: 9px; line-height: 1.6; font-weight: 600; max-width: 600px; margin: 0 auto; opacity: 0.8; }
+
+        @keyframes blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.9; transform: scale(0.99); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        #modalOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 5000; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        .modal-box { background: #ffffff; border-radius: 2.5rem; padding: 1.8rem; max-width: 350px; width: 92%; text-align: center; border-top: 8px solid #2563eb; position: relative; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4); }
+        
+        .modal-steps { text-align: left; margin: 15px 0; background: #f8fafc; padding: 15px; border-radius: 20px; border: 1px solid #e2e8f0; }
+        .step-item { display: flex; gap: 10px; margin-bottom: 12px; }
+        .step-num { background: #2563eb; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+        .step-text { font-size: 11px; font-weight: 600; color: #1e293b; line-height: 1.5; }
+
+        .btn-premium { 
+            background: #2563eb; 
+            color: white; padding: 16px; border-radius: 16px; text-transform: uppercase; 
+            font-size: 13px; font-weight: 800; display: block; text-decoration: none; 
+            margin-bottom: 12px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            animation: blink 2s infinite ease-in-out;
+        }
+        
+        #checkBtn { 
+            background: transparent; 
+            color: #2563eb; 
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 16px; 
+            text-transform: uppercase; 
+            font-size: 11px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            border: 2px solid #2563eb; 
+            transition: 0.2s;
+            animation: blink 2s infinite ease-in-out 1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        #checkBtn:active { background: rgba(37, 99, 235, 0.05); transform: scale(0.98); }
+        
+        .btn-failed { color: #ef4444 !important; border-color: #ef4444 !important; animation: none !important; }
+
+        .modal-footer-text { margin-top: 18px; padding-top: 12px; border-top: 1px dashed #cbd5e1; }
+        .m-footer-1 { font-size: 10px; font-weight: 700; color: #64748b; margin-bottom: 2px; }
+        .m-footer-2 { font-size: 10.5px; font-weight: 500; color: #2563eb; text-transform: uppercase; } 
+
+        body.modal-active { overflow: hidden; }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="nav-banner">
+            <span class="ping-dot"></span>
+            <h1>Google Play Giveaway</h1>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="cardGrid" class="grid"></div>
+
+        <div class="share-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg" alt="Google Play" class="w-16 h-16 mx-auto mb-4">
+            <h2 class="text-2xl font-black text-white uppercase tracking-tight">$500 CARD</h2>
+            <p class="text-slate-300 text-xs mt-2 px-4">Share with friends on WhatsApp to register your entry for the $500 giveaway</p>
+            <div class="prog-container"><div class="prog-fill" id="bar"></div></div>
+            <div id="countText" class="text-[11px] font-black text-emerald-400 tracking-widest uppercase">0 / 5 SHARE</div>
+            <button class="btn-wa" onclick="sh()"><i class="fab fa-whatsapp mr-2"></i> SHARE & JOIN DRAW</button>
+        </div>
+
+        <footer class="main-footer">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Disclaimer</a>
+                <a href="#">Contact us</a>
+            </div>
+            <div class="footer-copyright">
+                © 2026 Google Play Redeem Info | Independent educational landing page (not affiliated with Google LLC) Copyright © 2026
+            </div>
+        </footer>
+    </div>
+
+    <div id="modalOverlay">
+        <div class="modal-box">
+            <button onclick="closeModal()" class="absolute top-5 right-6 text-slate-400"><i class="fas fa-times text-xl"></i></button>
+            
+            <div class="bg-orange-100 text-orange-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-orange-200" style="animation: bounce 2s infinite;">
+                <i class="fas fa-gift text-3xl"></i>
+            </div>
+
+            <h2 class="text-xl font-extrabold text-slate-900">Human Verification</h2>
+            <h3 class="text-sm font-bold text-slate-500 mt-1">Finalizing: <span id="modalAmount" class="text-blue-600"></span></h3>
+            
+            <div class="modal-steps">
+                <div class="step-item"><span class="step-num">1</span><p class="step-text">Tap To "Download & Register" and sign up app/site.</p></div>
+                <div class="step-item"><span class="step-num">2</span><p class="step-text">Use it for 20–30 seconds.</p></div>
+                <div class="step-item"><span class="step-num">3</span><p class="step-text">Return here and submit your email to enter the giveaway.</p></div>
+            </div>
+
+            <div class="space-y-3">
+                <a href="#" id="cpaLink" target="_blank" class="btn-premium">DOWNLOAD & REGISTER</a>
+                <button onclick="startFakeCheck()" id="checkBtn">
+                    <i class="fas fa-sync-alt"></i> CHECK STATUS
+                </button>
+            </div>
+
+            <div class="modal-footer-text">
+                <p class="m-footer-1">© Winners announced via email.</p>
+                <p class="m-footer-2">$ Complete registration to be eligible</p>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const offers = [
+        { amt: "6,000 FF Diamonds", img: "https://ffredeemcode1890ff.netlify.app/images/diamonds-reward.jpg", link: "https://otieu.com/4/10300559" }, 
+        { amt: "20,000 Robux", img: "https://iili.io/BfBFGg2.jpg", link: "https://otieu.com/4/10300559" }, 
+        { amt: "$200 Google Card", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg", link: "https://otieu.com/4/10300559" }, 
+        { amt: "4,500 PUBG UC", img: "https://iili.io/BKvttcv.jpg", link: "https://otieu.com/4/10300559" }, 
+        { amt: "5,000 COC Gems", img: "https://iili.io/fmygR1e.png", link: "https://otieu.com/4/10300559" }, 
+        { amt: "15,500 V-Bucks", img: "https://iili.io/BfCGNx1.jpg", link: "https://otieu.com/4/10300559" },
+        { amt: "18,000 COD Points", img: "https://iili.io/BfnWqIp.jpg", link: "https://otieu.com/4/10300559" }, 
+        { amt: "15,000 Minecoins", img: "https://iili.io/Bfnedox.jpg", link: "https://otieu.com/4/10300559" }
+    ];
+
+    const megaRewardLink = "https://otieu.com/4/10300559";
+
+    function renderCards() {
+        const grid = document.getElementById('cardGrid');
+        offers.forEach(o => {
+            grid.innerHTML += `
+            <div class="card" onclick="openModal('${o.amt}', '${o.link}')">
+                <div class="card-content">
+                    <img src="${o.img}">
+                    <h3>${o.amt}</h3>
+                </div>
+                <button class="btn-green">REDEEM</button>
+            </div>`;
+        });
+    }
+
+    function openModal(amt, link) {
+        document.getElementById('modalAmount').innerText = amt;
+        document.getElementById('cpaLink').href = link;
+        document.getElementById('modalOverlay').style.display = 'flex';
+        document.body.classList.add('modal-active');
+    }
+    
+    function closeModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+        document.body.classList.remove('modal-active');
+    }
+
+    function startFakeCheck() {
+        const btn = document.getElementById('checkBtn');
+        btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> VERIFYING...';
+        btn.classList.remove('btn-failed');
+
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> FAILED! TRY AGAIN';
+            btn.classList.add('btn-failed');
+            setTimeout(() => { 
+                btn.innerHTML = '<i class="fas fa-sync-alt"></i> CHECK STATUS'; 
+                btn.classList.remove('btn-failed');
+                btn.disabled = false; 
+            }, 3000);
+        }, 2500);
+    }
+
+    let c = 0;
+    function sh() {
+        const msg = `An amazing Google Play reward giveaway is going on! 🎁\nI’ve already registered my entry, you can try it too. Join the giveaway using the link below: 👇👇\nhttps://www.proxilhub.com\n\nদারুন একটা Google Play রিওয়ার্ড giveaway চলছে!🎁 \nআমি আমার entry register করেছি, তুমিও চেষ্টা করে দেখতে পারো। Join করার লিঙ্ক নিচে দেওয়া হলো: 👇👇\nhttps://www.proxilhub.com\n\nएक शानदार Google Play रिवॉर्ड giveaway चल रही है! 🎁\nमैंने अपनी entry register कर ली है, आप भी कोशिश करके देख सकते हैं। Join करने का लिंक नीचे दिया गया है: 👇👇\nhttps://www.proxilhub.com/`;
+        if(c < 4) {
+            c++;
+            document.getElementById('bar').style.width = (c * 20) + '%';
+            document.getElementById('countText').innerText = c + ' / 5 SHARE';
+            window.open('whatsapp://send?text=' + encodeURIComponent(msg));
+        } else { 
+            openModal('$500 MEGA REWARD', megaRewardLink); 
+        }
+    }
+    renderCards();
+</script>
+</body>
+</html>
