@@ -12,8 +12,7 @@
         
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f2f2f2; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; color: #1a1a1a; min-height: 100vh; overflow-x: hidden; }
 
-        .top-nav { width: 100%; padding: 14px 0; background: rgba(242, 242, 242, 0.9); border-bottom: 1px solid rgba(0, 0, 0, 0.05); text-align: center; backdrop-filter: blur(15px); position: fixed; top: 0; left: 0; z-index: 1000; transition: top 0.4s ease; }
-        .top-nav.nav-hidden { top: -85px; }
+        .top-nav { width: 100%; padding: 14px 0; background: rgba(242, 242, 242, 0.9); border-bottom: 1px solid rgba(0, 0, 0, 0.05); text-align: center; backdrop-filter: blur(15px); position: fixed; top: 0; left: 0; z-index: 1000; }
         .nav-banner { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 100px; background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.05); }
         .nav-banner h1 { font-size: 13px; font-weight: 800; color: #1a1a1a; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
 
@@ -21,63 +20,93 @@
         .grid { display: grid; gap: 14px; margin-bottom: 40px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
         @media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; } }
 
-        .card { background: #ffffff; border-radius: 24px; padding: 25px 15px; text-align: center; border: 1px solid rgba(0,0,0,0.03); display: flex; flex-direction: column; transition: 0.3s; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .card { background: #ffffff; border-radius: 24px; padding: 25px 15px; text-align: center; border: 1px solid rgba(0,0,0,0.03); display: flex; flex-direction: column; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 30px rgba(0,0,0,0.12); }
         .card img { width: 68px; height: 68px; margin: 0 auto 18px; border-radius: 14px; object-fit: contain; }
         .card h3 { font-weight: 800; font-size: 14px; color: #333; margin-bottom: 18px; }
+
+        @keyframes slowShine {
+            0% { transform: translateX(-250%) skewX(-30deg); }
+            35% { transform: translateX(250%) skewX(-30deg); }
+            100% { transform: translateX(250%) skewX(-30deg); }
+        }
+        .btn-shine { position: relative; overflow: hidden; }
+        .btn-shine::after { content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 100%; background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent); animation: slowShine 4.5s infinite ease-in-out; pointer-events: none; }
+
         .btn-green { margin-top: auto; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; border: none; width: 100%; padding: 12px; border-radius: 14px; font-weight: 800; font-size: 11px; text-transform: uppercase; }
 
-        /* WIN NOTIFICATION */
-        #win-notify { position: fixed; top: -60px; right: 10px; background: #ffffff; border-radius: 30px; padding: 5px 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 6px; z-index: 9999; transition: top 0.4s ease-in-out; border: 1px solid #eee; pointer-events: none; }
-        #win-notify.show { top: 75px; }
-        .win-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; animation: pulse 1.5s infinite; }
-        .win-text { font-size: 10px; color: #4b5563; font-weight: 600; white-space: nowrap; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .share-box-container { position: relative; max-width: 550px; width: 100%; margin: 20px auto; }
+        .share-box { background: #1f2937; border-radius: 28px; padding: 40px 20px; width: 100%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: filter 0.3s ease; }
+        .box-blur { filter: blur(20px); pointer-events: none; }
 
-        /* SHARE BOX */
-        .share-box { background: #1f2937; border-radius: 28px; padding: 40px 20px; margin: 20px auto; max-width: 550px; width: 100%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        #error-overlay { position: absolute; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; border-radius: 28px; padding: 20px; text-align: center; }
+        .error-content { background: #ffffff; color: #1f2937; border-radius: 20px; padding: 25px; border: 3px solid #ef4444; box-shadow: 0 15px 40px rgba(0,0,0,0.4); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .btn-try-again { background: #ef4444; color: white; padding: 10px 25px; border-radius: 12px; font-weight: 800; font-size: 13px; margin-top: 15px; cursor: pointer; border: none; text-transform: uppercase; }
+
         .prog-container { background: #374151; height: 14px; border-radius: 50px; margin: 20px 0 10px; overflow: hidden; }
         .prog-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: 0.6s ease; }
         .btn-wa { background: #25d366; color: white; width: 100%; padding: 16px; border-radius: 18px; margin-top: 15px; font-weight: 800; border: none; cursor: pointer; text-transform: uppercase; font-size: 14px; }
 
-        /* MODAL */
-        #modalOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(8px); padding: 20px; }
-        .modal-box { background: #ffffff; border-radius: 2.5rem; padding: 2.5rem 1.5rem; max-width: 320px; width: 100%; text-align: center; border-top: 8px solid #f97316; position: relative; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4); }
-        .modal-steps { text-align: left; margin: 18px 0; background: #f8fafc; padding: 15px; border-radius: 20px; border: 1px solid #e2e8f0; }
-        .step-item { display: flex; gap: 8px; margin-bottom: 12px; }
-        .step-num { background: #2563eb; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0; }
-        .step-text { font-size: 11px; font-weight: 600; color: #1e293b; line-height: 1.4; }
-        #checkBtn { background: #1f2937; color: white; width: 100%; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; text-transform: uppercase; transition: 0.3s; }
-        .btn-failed { background-color: #ef4444 !important; }
+        .input-group { display: none; margin-top: 20px; text-align: left; }
+        .form-input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 12px; background: #fff; color: #333; font-weight: 600; outline: none; }
+        .btn-submit { background: #2563eb; color: white; width: 100%; padding: 16px; border-radius: 14px; font-weight: 800; border: none; text-transform: uppercase; cursor: pointer; display: block; width: 100%; }
 
-        .modal-footer-info { margin-top: 15px; padding-top: 10px; border-top: 1px dashed #cbd5e1; }
-        .m-footer-1 { font-size: 10px; font-weight: 500; color: #6b7280; }
-        .m-footer-2 { font-size: 10.5px; font-weight: 600; color: #10b981; text-transform: uppercase; margin-top: 2px; }
-
+        #modalOverlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(8px); padding: 20px; }
+        .modal-box { background: #ffffff; border-radius: 2.5rem; padding: 2.5rem 1.5rem; max-width: 330px; width: 100%; text-align: center; border-top: 4px solid #f97316; position: relative; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4); }
+        .modal-buttons { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .btn-premium-green { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; padding: 16px; border-radius: 12px; font-weight: 700; display: block; text-decoration: none; font-size: 13px; text-transform: uppercase; }
+        #checkBtn { background: #1f2937; color: white; width: 100%; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 12px; border: none; text-transform: uppercase; }
+        
         .main-footer { padding: 50px 20px 30px; text-align: center; background: #ffffff; width: 100%; border-top: 1px solid #e5e7eb; margin-top: 40px; }
-        body.modal-active { overflow: hidden; }
+        
+        .admin-only-text { display: none; }
     </style>
 </head>
 <body>
 
-    <nav class="top-nav" id="topNav">
+    <nav class="top-nav">
         <div class="nav-banner"><h1>Google Play Giveaway</h1></div>
     </nav>
 
     <div class="container">
         <div id="cardGrid" class="grid"></div>
-        <div class="share-box">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg" alt="Google Play" class="w-16 h-16 mx-auto mb-4">
-            <h2 class="text-2xl font-black text-white uppercase tracking-tight">$500 CARD</h2>
-            <p class="text-slate-300 text-xs mt-2 px-4">Share with friends on WhatsApp to register your entry for the giveaway</p>
-            <div class="prog-container"><div class="prog-fill" id="bar"></div></div>
-            <div id="countText" class="text-[11px] font-black text-emerald-400 tracking-widest uppercase">PROGRESS: <span id="currentC">0</span> / 5 SHARES</div>
-            <button class="btn-wa" onclick="sh()"><i class="fab fa-whatsapp mr-2"></i> SHARE & JOIN DRAW</button>
-        </div>
-    </div>
+        
+        <div class="share-box-container">
+            <div id="error-overlay">
+                <div class="error-content">
+                    <p style="font-size: 14px; font-weight: 800; color: #ef4444; margin-bottom: 8px;">FAKE SHARE DETECTED 🚫</p>
+                    <p style="font-size: 11px; font-weight: 600; color: #4b5563; line-height: 1.4;">
+                        👥 PLEASE SHARE TO GENUINE GROUP OR FRIENDS. WHOSE WANT FREE PLAY STORE REDEEM CODE — FAKE SHARE NOT ALLOWED 🚫⚠️
+                    </p>
+                    <button class="btn-try-again" onclick="hideError()">Try Again</button>
+                </div>
+            </div>
 
-    <div id="win-notify">
-        <div class="win-dot"></div>
-        <div class="win-text"><b id="win-email">loading...</b> won <span id="win-reward">...</span></div>
+            <div id="mainShareBox" class="share-box">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg" alt="GP" class="w-16 h-16 mx-auto mb-4">
+                <h2 class="text-2xl font-black text-white uppercase tracking-tight">$500 CARD</h2>
+                
+                <div id="progress-area">
+                    <p class="text-slate-300 text-xs mt-2 px-4">Share with friends on WhatsApp to register your entry</p>
+                    <div class="prog-container"><div class="prog-fill" id="bar"></div></div>
+                    <div class="text-[11px] font-black text-emerald-400 tracking-widest uppercase">PROGRESS: <span id="currentC">0</span> / 5 SHARES</div>
+                    <button id="whatsappBtn" class="btn-wa btn-shine" onclick="sh()"><i class="fab fa-whatsapp mr-2"></i> SHARE & JOIN DRAW</button>
+                </div>
+
+                <div id="submit-box" class="input-group">
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+                    
+                    <div class="admin-only-text">নিচের action="..." এর ভিতর থাকা লিঙ্ক টা চেইনজ করলেই কাজ হয়ে যাবে system io তে ইমেইল চলে যাবে</div>
+                    <form action="https://systeme.io/embedded/39759259/subscription" method="post" target="hidden_iframe" onsubmit="handleFormSubmit()"> 
+                        <p class="text-emerald-400 text-[10px] font-bold mb-4 uppercase text-center">Registration Success! Now Submit</p>
+                        <input type="text" name="surname" class="form-input" placeholder="Enter Your Name" required>
+                        <input type="email" name="email" class="form-input" placeholder="Enter Your Email (@gmail.com)" required>
+                        <button type="submit" class="btn-submit btn-shine">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="main-footer">
@@ -92,122 +121,115 @@
             <div class="bg-orange-100 text-orange-600 w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-orange-200"><i class="fas fa-gift text-2xl animate-bounce"></i></div>
             <h2 class="text-xl font-extrabold text-slate-900">One Last Step</h2>
             <p class="text-orange-500 font-bold text-[9px] mb-2 uppercase tracking-widest">Verification Required</p>
-            <h3 class="text-[15px] font-bold text-gray-700 mb-2 px-2">Win a chance to get <span id="modalAmount" class="text-blue-600 font-black"></span><span id="popDiamond"></span></h3>
-            <div class="modal-steps">
-                <div class="step-item"><span class="step-num">1</span><p class="step-text">Tap To "Download & Register" and sign up app/site.</p></div>
-                <div class="step-item"><span class="step-num">2</span><p class="step-text">Use it for 20–30 seconds.</p></div>
-                <div class="step-item"><span class="step-num">3</span><p class="step-text">Return here and submit your email to enter the giveaway.</p></div>
+            <h3 class="text-[15px] font-bold text-gray-700 mb-2 px-2">Win a chance to get <span id="modalAmount" class="text-blue-600 font-black"></span></h3>
+            
+            <div class="modal-steps" style="text-align: left; margin: 18px 0; background: #f8fafc; padding: 15px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                <div style="display: flex; gap: 8px; margin-bottom: 12px;"><span style="background: #2563eb; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0;">1</span><p style="font-size: 11px; font-weight: 600; color: #1e293b; line-height: 1.4;">Tap To "Download & Register" and sign up app/site.</p></div>
+                <div style="display: flex; gap: 8px;" id="step2_wrapper"><span style="background: #2563eb; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0;">2</span><p style="font-size: 11px; font-weight: 600; color: #1e293b;">Use it for 20–30 seconds.</p></div>
+                <div id="step3" style="display: flex; gap: 8px; margin-top: 12px;"><span style="background: #2563eb; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0;">3</span><p style="font-size: 11px; font-weight: 600; color: #1e293b;">Return here and submit your email to enter the giveaway.</p></div>
             </div>
-            <div class="space-y-3">
-                <a href="#" id="cpaLink" target="_blank" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; padding: 16px; border-radius: 12px; font-weight: 700; display: block; text-decoration: none; margin-bottom: 12px; font-size: 13px; text-transform: uppercase;">DOWNLOAD & REGISTER</a>
-                <button onclick="startFakeCheck()" id="checkBtn"><i class="fas fa-sync-alt" id="syncIcon"></i> CHECK STATUS</button>
+
+            <div class="modal-buttons">
+                <a id="modalOfferLink" href="#" target="_blank" class="btn-premium-green btn-shine"><i class="fas fa-download mr-1"></i> DOWNLOAD & REGISTER</a>
+                <button onclick="startFakeCheck()" id="checkBtn" class="btn-shine"><i class="fas fa-sync-alt mr-2"></i> CHECK STATUS</button>
             </div>
-            <div class="modal-footer-info">
-                <p class="m-footer-1">© Winners announced via email.</p>
-                <p class="m-footer-2">Complete registration to be eligible</p>
+            
+            <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #cbd5e1; text-align: center;">
+                <p style="font-size: 11px; font-weight: 800; color: #334155; margin-bottom: 8px; line-height: 1.6; letter-spacing: 0.5px;">© Winners announced via email.</p>
+                <p style="font-size: 10px; font-weight: 900; color: #059669; text-transform: uppercase; margin: 0; line-height: 1.6; letter-spacing: 1px;">Complete registration to be eligible</p>
             </div>
         </div>
     </div>
 
 <script>
-    let lastScroll = 0;
-    const topNav = document.getElementById('topNav');
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        if (currentScroll > lastScroll && currentScroll > 80) { topNav.classList.add('nav-hidden'); } 
-        else { topNav.classList.remove('nav-hidden'); }
-        lastScroll = currentScroll;
-    });
-
     const offers = [
-        { amt: "$400 USDT Cash", short: "$400 USDT", img: "https://iili.io/BuJCZe2.jpg", link: "https://otieu.com/4/10300559", type: "cash" },
-        { amt: "$100 Google Card", short: "$100 Card", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg", link: "https://otieu.com/4/10300559", type: "cash" },
-        { amt: "6,000 FF Diamonds", short: "6K FF", img: "https://ffredeemcode1890ff.netlify.app/images/diamonds-reward.jpg", link: "https://otieu.com/4/10300559", type: "game" }, 
-        { amt: "20,000 Robux", short: "20K Robux", img: "https://iili.io/BfBFGg2.jpg", link: "https://otieu.com/4/10300559", type: "game" }, 
-        { amt: "5,000 MLBB Diamonds", short: "5K MLBB", img: "https://iili.io/Bu28ZLG.png", link: "https://otieu.com/4/10300559", type: "game" }, 
-        { amt: "4,500 PUBG UC", short: "4.5K UC", img: "https://iili.io/BKvttcv.jpg", link: "https://otieu.com/4/10300559", type: "game" }, 
-        { amt: "5,000 COC Gems", short: "5K Gems", img: "https://iili.io/fmygR1e.png", link: "https://otieu.com/4/10300559", type: "game" }, 
-        { amt: "15,500 V-Bucks", short: "15K V-Bucks", img: "https://iili.io/BfCGNx1.jpg", link: "https://otieu.com/4/10300559", type: "game" },
-        { amt: "18,000 COD Points", short: "18K CP", img: "https://iili.io/BfnWqIp.jpg", link: "https://otieu.com/4/10300559", type: "game" },
-        { amt: "15,000 Minecoins", short: "15K Coins", img: "https://iili.io/Bfnedox.jpg", link: "https://otieu.com/4/10300559", type: "game" },
-        { amt: "$1000 GTA Online Cash", short: "$1K GTA", img: "https://iili.io/Bu35jsf.jpg", link: "https://otieu.com/4/10300559", type: "cash" },
-        { amt: "Monopoly GO Dice", short: "M-GO Dice", img: "https://iili.io/Bu3Dm9n.jpg", link: "https://otieu.com/4/10300559", type: "game" }
+        { amt: "$400 USDT Cash", img: "https://iili.io/BuJCZe2.jpg", link: "https://otieu.com/4/10300559" },
+        { amt: "$100 Google Card", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg", link: "https://otieu.com/4/10300559" },
+        { amt: "6,000 FF Diamonds", img: "https://ffredeemcode1890ff.netlify.app/images/diamonds-reward.jpg", link: "https://otieu.com/4/10300559" }, 
+        { amt: "20,000 Robux", img: "https://iili.io/BfBFGg2.jpg", link: "https://otieu.com/4/10300559" }, 
+        { amt: "5,000 MLBB Diamonds", img: "https://iili.io/Bu28ZLG.png", link: "https://otieu.com/4/10300559" }, 
+        { amt: "4,500 PUBG UC", img: "https://iili.io/BKvttcv.jpg", link: "https://otieu.com/4/10300559" }, 
+        { amt: "5,000 COC Gems", img: "https://iili.io/fmygR1e.png", link: "https://otieu.com/4/10300559" }, 
+        { amt: "15,500 V-Bucks", img: "https://iili.io/BfCGNx1.jpg", link: "https://otieu.com/4/10300559" },
+        { amt: "18,000 COD Points", img: "https://iili.io/BfnWqIp.jpg", link: "https://otieu.com/4/10300559" },
+        { amt: "15,000 Minecoins", img: "https://iili.io/Bfnedox.jpg", link: "https://otieu.com/4/10300559" },
+        { amt: "$1000 GTA Online", img: "https://iili.io/Bu35jsf.jpg", link: "https://otieu.com/4/10300559" },
+        { amt: "Monopoly GO Dice", img: "https://iili.io/Bu3Dm9n.jpg", link: "https://otieu.com/4/10300559" }
     ];
 
-    // --- HIDDEN CHARACTER EMAIL GENERATOR ---
-    function generateRandomName() {
-        const names = ["tanvir", "sabbir", "akash", "shuvo", "mithu", "rahul", "ankit", "rohan", "deepak", "priya", "james", "william", "oliver", "emma", "noah", "mark", "princess", "george", "harry", "alex", "king", "mary", "pro"];
-        let name = names[Math.floor(Math.random() * names.length)];
-        
-        // Hide characters in the middle
-        if(name.length > 3) {
-            name = name.substring(0, 2) + "**" + name.substring(name.length - 1);
-        } else {
-            name = name.substring(0, 1) + "**";
-        }
-        
-        const num = Math.floor(Math.random() * 9);
-        return name + num + "@gmail.com";
-    }
-
-    function showWinNotification() {
-        const notify = document.getElementById('win-notify');
-        document.getElementById('win-email').innerText = generateRandomName();
-        document.getElementById('win-reward').innerText = offers[Math.floor(Math.random() * offers.length)].short;
-        notify.classList.add('show');
-        setTimeout(() => notify.classList.remove('show'), 3500);
-    }
-    setTimeout(() => { showWinNotification(); setInterval(showWinNotification, 10000); }, 3000);
-
     function renderCards() {
-        const grid = document.getElementById('cardGrid');
-        offers.forEach(o => { grid.innerHTML += `<div class="card" onclick="openModal('${o.amt}', '${o.link}', '${o.type}')"><div class="card-content"><img src="${o.img}"><h3>${o.amt}</h3></div><button class="btn-green">REDEEM</button></div>`; });
+        document.getElementById('cardGrid').innerHTML = offers.map(o => `
+            <div class="card" onclick="openModal('${o.amt}', '${o.link}', true)">
+                <img src="${o.img}">
+                <h3>${o.amt}</h3>
+                <button class="btn-green btn-shine">REDEEM</button>
+            </div>`).join('');
     }
 
-    function openModal(amt, link, type) {
+    function openModal(amt, link, showStep3) {
         document.getElementById('modalAmount').innerText = amt;
-        document.getElementById('cpaLink').href = link;
-        document.getElementById('popDiamond').innerText = (type === "game") ? " 💎" : "";
+        document.getElementById('modalOfferLink').href = link;
+        document.getElementById('step3').style.display = showStep3 ? 'flex' : 'none';
+        document.getElementById('step2_wrapper').style.marginBottom = showStep3 ? '12px' : '0';
         document.getElementById('modalOverlay').style.display = 'flex';
-        document.body.classList.add('modal-active');
+        document.body.style.overflow = 'hidden';
     }
-    function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; document.body.classList.remove('modal-active'); resetCheckButton(); }
 
-    function resetCheckButton() {
-        const btn = document.getElementById('checkBtn');
-        btn.innerHTML = '<i class="fas fa-sync-alt"></i> CHECK STATUS';
-        btn.classList.remove('btn-failed');
-        btn.disabled = false;
+    function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
+
+    let c = 0;
+    let isErrorState = false;
+
+    function sh() {
+        const msg = `An amazing Google Play reward giveaway is going on! 🎁\nJoin now: https://www.proxilhub.com`;
+        if (c > 0 && c < 5 && !isErrorState && Math.random() < 0.45) {
+            c--; 
+            updateProgress();
+            document.getElementById('mainShareBox').classList.add('box-blur');
+            document.getElementById('error-overlay').style.display = 'flex';
+            isErrorState = true; 
+            return;
+        }
+        if(c < 5) {
+            c++;
+            isErrorState = false; 
+            updateProgress();
+            window.open('whatsapp://send?text=' + encodeURIComponent(msg));
+            if (c === 5) {
+                setTimeout(() => {
+                    document.getElementById('progress-area').style.display = 'none';
+                    document.getElementById('submit-box').style.display = 'block';
+                }, 800);
+            }
+        }
+    }
+
+    function updateProgress() {
+        document.getElementById('bar').style.width = (c * 20) + '%';
+        document.getElementById('currentC').innerText = c;
+    }
+
+    function hideError() {
+        document.getElementById('mainShareBox').classList.remove('box-blur');
+        document.getElementById('error-overlay').style.display = 'none';
+    }
+
+    function handleFormSubmit() {
+        openModal('$500 MEGA REWARD', 'https://otieu.com/4/10300559', false);
     }
 
     function startFakeCheck() {
         const btn = document.getElementById('checkBtn');
-        btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> CHECKING...';
         setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-times-circle"></i> Not Finished!';
-            btn.classList.add('btn-failed');
-            setTimeout(() => resetCheckButton(), 3000);
-        }, 2000);
+            btn.style.backgroundColor = '#ef4444'; btn.innerHTML = '<i class="fas fa-times-circle mr-2"></i> NOT FINISHED!';
+            setTimeout(() => { 
+                btn.style.backgroundColor = '#1f2937'; 
+                btn.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> CHECK STATUS'; 
+            }, 2500);
+        }, 3000);
     }
 
-    let c = 0;
-    function sh() {
-        const msg = `An amazing Google Play reward giveaway is going on! 🎁
-I’ve already registered my entry, you can try it too. Join the giveaway using the link below: 👇👇
-https://www.proxilhub.com
-
-
-দারুন একটা Google Play রিওয়ার্ড giveaway চলছে!🎁 
-আমি আমার entry register করেছি, তুমিও চেষ্টা করে দেখতে পারো। Join করার লিঙ্ক নিচে দেওয়া হলো: 👇👇
-https://www.proxilhub.com
-
-
-एक शानदार Google Play रिवॉर्ड giveaway चल रही है! 🎁
-मैंने अपनी entry register कर ली है, आप भी कोशिश करके देख सकते हैं। Join करने का लिंक नीचे दिया गया है: 👇👇
-https://www.proxilhub.com/`;
-        if(c < 5) { c++; document.getElementById('bar').style.width = (c * 20) + '%'; document.getElementById('currentC').innerText = c; window.open('whatsapp://send?text=' + encodeURIComponent(msg)); } 
-        else { openModal('$500 MEGA REWARD', "https://otieu.com/4/10300559", "cash"); }
-    }
     renderCards();
 </script>
 </body>
