@@ -14,32 +14,79 @@
 
         .top-nav { width: 100%; padding: 14px 0; background: rgba(242, 242, 242, 0.9); border-bottom: 1px solid rgba(0, 0, 0, 0.05); text-align: center; backdrop-filter: blur(15px); position: fixed; top: 0; left: 0; z-index: 1000; }
         .nav-banner { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 100px; background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.05); }
-        .nav-banner h1 { font-size: 13px; font-weight: 800; color: #1a1a1a; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+        .nav-banner h1 { font-size: 14px; font-weight: 800; color: #1a1a1a; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
 
-        .container { width: 100%; max-width: 1100px; padding: 100px 12px 40px; }
+        .container { width: 100%; max-width: 1100px; padding: 90px 14px 40px; }
         
+        /* Grid setup - Exactly 2 columns for mobile */
         .grid { 
             display: grid !important; 
             gap: 14px; 
             margin-bottom: 40px; 
             grid-template-columns: repeat(2, 1fr); 
         }
+        @media (min-width: 768px) { 
+            .grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } 
+        }
         @media (min-width: 1024px) { 
             .grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } 
         }
 
-        .card { background: #ffffff; border-radius: 24px; padding: 25px 15px; text-align: center; border: 1px solid rgba(0,0,0,0.03); display: flex; flex-direction: column; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-        .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 30px rgba(0,0,0,0.12); }
-        .card img { width: 68px; height: 68px; margin: 0 auto 18px; border-radius: 14px; object-fit: contain; }
-        .card h3 { font-weight: 800; font-size: 14px; color: #333; margin-bottom: 18px; }
+        /* Card Design - Matched with Screenshot */
+        .card { 
+            background: #ffffff; 
+            border-radius: 22px; 
+            padding: 22px 14px; 
+            text-align: center; 
+            border: 1px solid rgba(0,0,0,0.04); 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); 
+            transition: all 0.3s ease; 
+            cursor: pointer; 
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(0,0,0,0.08); }
+        
+        /* Image Design */
+        .card img { 
+            width: 76px; 
+            height: 76px; 
+            margin: 0 auto 16px; 
+            border-radius: 14px; 
+            object-fit: cover; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        /* Text Design */
+        .card h3 { 
+            font-weight: 800; 
+            font-size: 14px; 
+            color: #1f2937; 
+            margin-bottom: 18px; 
+            line-height: 1.3;
+        }
 
         .btn-shine { position: relative; overflow: hidden; }
-        .btn-shine::after { content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 100%; background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent); animation: slowShine 4.5s infinite ease-in-out; pointer-events: none; }
+        .btn-shine::after { content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 100%; background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent); animation: slowShine 3s infinite ease-in-out; pointer-events: none; }
         @keyframes slowShine { 0% { transform: translateX(-250%) skewX(-30deg); } 35% { transform: translateX(250%) skewX(-30deg); } 100% { transform: translateX(250%) skewX(-30deg); } }
 
-        .btn-green { margin-top: auto; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; border: none; width: 100%; padding: 12px; border-radius: 14px; font-weight: 800; font-size: 11px; text-transform: uppercase; }
+        /* Button Design - Blue color from screenshot */
+        .btn-green { 
+            margin-top: auto; 
+            background: #2563eb; 
+            color: white; 
+            border: none; 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 12px; 
+            font-weight: 700; 
+            font-size: 13px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }
 
-        .share-box-container { position: relative; max-width: 550px; width: 100%; margin: 20px auto; }
+        /* Share Box & Modals */
+        .share-box-container { position: relative; max-width: 550px; width: 100%; margin: 10px auto 20px; }
         .share-box { background: #1f2937; border-radius: 28px; padding: 40px 20px; width: 100%; text-align: center; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: filter 0.3s ease; }
         .box-blur { filter: blur(20px); pointer-events: none; }
 
@@ -56,10 +103,10 @@
         .form-input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 12px; background: #fff; color: #333; font-weight: 600; outline: none; }
         .btn-submit { background: #2563eb; color: white; width: 100%; padding: 16px; border-radius: 14px; font-weight: 800; border: none; text-transform: uppercase; cursor: pointer; display: block; width: 100%; }
 
-        .win-toast { position: fixed; top: 70px; right: -300px; background: #ffffff; color: #1a1a1a; padding: 8px 15px; border-radius: 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 5000; transition: 0.5s ease-in-out; border: 1px solid #e2e8f0; width: max-content; pointer-events: none; }
+        .win-toast { position: fixed; top: 70px; right: -300px; background: #ffffff; color: #1a1a1a; padding: 10px 16px; border-radius: 50px; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 5000; transition: 0.5s ease-in-out; border: 1px solid #e2e8f0; width: max-content; pointer-events: none; }
         .win-toast.show { right: 20px; }
-        .win-icon { background: #10b981; color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; }
-        .win-text { font-size: 10px; font-weight: 700; white-space: nowrap; }
+        .win-icon { background: #10b981; color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+        .win-text { font-size: 12px; font-weight: 700; white-space: nowrap; }
 
         #modalOverlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(8px); padding: 20px; }
         .modal-box { background: #ffffff; border-radius: 2.5rem; padding: 2.5rem 1.5rem; max-width: 330px; width: 100%; text-align: center; border-top: 4px solid #f97316; position: relative; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4); }
@@ -67,10 +114,10 @@
         .btn-premium-green { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; padding: 16px; border-radius: 12px; font-weight: 700; display: block; text-decoration: none; font-size: 13px; text-transform: uppercase; }
         #checkBtn { background: #1f2937; color: white; width: 100%; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 12px; border: none; text-transform: uppercase; }
         
-        .main-footer { padding: 50px 20px 30px; text-align: center; background: #ffffff; width: 100%; border-top: 1px solid #e5e7eb; margin-top: 40px; }
-        .footer-links a { font-size: 14px !important; }
-        .footer-disclaimer { font-size: 12px !important; margin-top: 10px; }
-        .footer-copyright { font-size: 14px !important; margin-top: 15px; }
+        .main-footer { padding: 40px 20px 20px; text-align: center; background: #ffffff; width: 100%; border-top: 1px solid #e5e7eb; margin-top: 40px; }
+        .footer-links a { font-size: 13px !important; }
+        .footer-disclaimer { font-size: 11px !important; margin-top: 10px; }
+        .footer-copyright { font-size: 12px !important; margin-top: 15px; }
 
         .admin-only-text { display: none; }
     </style>
@@ -113,7 +160,7 @@
 
                 <div id="submit-box" class="input-group">
                     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-                    <div class="admin-only-text">নিচের action="..." এর ভিতর থাকা লিঙ্ক টা চেইনজ করলেই কাজ হয়ে যাবে system io তে ইমেইল চলে যাবে</div>
+                    <div class="admin-only-text">নিচের action="..." এর ভিতর থাকা লিঙ্ক টা চেইনজ করলেই কাজ হয়ে যাবে system io তে ইমেইল চলে যাবে</div>
                     <form action="https://systeme.io/embedded/39759259/subscription" method="post" target="hidden_iframe" onsubmit="handleFormSubmit()"> 
                         <p class="text-emerald-400 text-[10px] font-bold mb-4 uppercase text-center">Registration Success! Now Submit</p>
                         <input type="text" name="surname" class="form-input" placeholder="Enter Your Name" required>
@@ -159,18 +206,18 @@
 
 <script>
     const offers = [
-        { amt: "$400 USDT Cash", img: "https://iili.io/BuJCZe2.jpg", link: "https://otieu.com/4/10300559" },
-        { amt: "$100 Google Card", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg", link: "https://otieu.com/4/10300559" },
-        { amt: "6,000 FF Diamonds", img: "https://ffredeemcode1890ff.netlify.app/images/diamonds-reward.jpg", link: "https://otieu.com/4/10300559" }, 
-        { amt: "20,000 Robux", img: "https://iili.io/BfBFGg2.jpg", link: "https://otieu.com/4/10300559" }, 
-        { amt: "5,000 MLBB Diamonds", img: "https://iili.io/Bu28ZLG.png", link: "https://otieu.com/4/10300559" }, 
-        { amt: "4,500 PUBG UC", img: "https://iili.io/BKvttcv.jpg", link: "https://otieu.com/4/10300559" }, 
-        { amt: "5,000 COC Gems", img: "https://iili.io/fmygR1e.png", link: "https://otieu.com/4/10300559" }, 
-        { amt: "15,500 V-Bucks", img: "https://iili.io/BfCGNx1.jpg", link: "https://otieu.com/4/10300559" },
-        { amt: "18,000 COD Points", img: "https://iili.io/BfnWqIp.jpg", link: "https://otieu.com/4/10300559" },
-        { amt: "15,000 Minecoins", img: "https://iili.io/Bfnedox.jpg", link: "https://otieu.com/4/10300559" },
-        { amt: "$1000 GTA Online", img: "https://iili.io/Bu35jsf.jpg", link: "https://otieu.com/4/10300559" },
-        { amt: "Monopoly GO Dice", img: "https://iili.io/Bu3Dm9n.jpg", link: "https://otieu.com/4/10300559" }
+        { amt: "$400 USDT Cash", img: "https://iili.io/BuJCZe2.jpg", link: "https://omg10.com/4/10300559" },
+        { amt: "$100 Google Card", img: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg", link: "https://omg10.com/4/10885548" },
+        { amt: "6,000 FF Diamonds", img: "https://ffredeemcode1890ff.netlify.app/images/diamonds-reward.jpg", link: "https://omg10.com/4/10885548" }, 
+        { amt: "20,000 Robux", img: "https://iili.io/BfBFGg2.jpg", link: "https://omg10.com/4/10885548" }, 
+        { amt: "5,000 MLBB Diamonds", img: "https://iili.io/Bu28ZLG.png", link: "https://omg10.com/4/10885548" }, 
+        { amt: "4,500 PUBG UC", img: "https://iili.io/BKvttcv.jpg", link: "https://omg10.com/4/10885548" }, 
+        { amt: "5,000 COC Gems", img: "https://iili.io/fmygR1e.png", link: "https://omg10.com/4/10885548" }, 
+        { amt: "15,500 V-Bucks", img: "https://iili.io/BfCGNx1.jpg", link: "https://omg10.com/4/10885548" },
+        { amt: "18,000 COD Points", img: "https://iili.io/BfnWqIp.jpg", link: "https://omg10.com/4/10885548" },
+        { amt: "15,000 Minecoins", img: "https://iili.io/Bfnedox.jpg", link: "https://omg10.com/4/10885548" },
+        { amt: "$1000 GTA Online", img: "https://iili.io/Bu35jsf.jpg", link: "https://omg10.com/4/10885548" },
+        { amt: "Monopoly GO Dice", img: "https://iili.io/Bu3Dm9n.jpg", link: "https://omg10.com/4/10885548" }
     ];
 
     function renderCards() {
@@ -187,19 +234,21 @@
     const rewards = ["$100", "$50", "$500", "6,000 Diamonds", "20,000 Robux"];
     let isModalOpen = false;
 
+    // Win Notification Logic Updated - Exactly 4 sec cycle
     function showWinToast() {
         const toast = document.getElementById('winToast');
         if (isModalOpen) {
             toast.classList.remove('show');
-            setTimeout(showWinToast, 2000);
+            setTimeout(showWinToast, 4000); // 4 sec
             return;
         }
 
         const email = chars[Math.floor(Math.random()*chars.length)] + "***" + chars[Math.floor(Math.random()*chars.length)] + "@" + providers[Math.floor(Math.random()*providers.length)];
         document.getElementById('winMsg').innerText = `${email} won ${rewards[Math.floor(Math.random()*rewards.length)]}!`;
         toast.classList.add('show');
-        setTimeout(() => { toast.classList.remove('show'); }, 3000);
-        setTimeout(showWinToast, 5000);
+        
+        setTimeout(() => { toast.classList.remove('show'); }, 2500); // Hide after 2.5s
+        setTimeout(showWinToast, 4000); // Next toast appears exactly 4s after this one started
     }
 
     function openModal(amt, link, showStep3) {
@@ -220,17 +269,20 @@
     }
 
     let c = 0;
-    const errorSteps = [false, false, true, false, true, false];
+    let errorCount = 0; // Track how many times error has been shown
 
+    // Share Logic Updated - Random error max 2 times
     function sh() {
         const msg = `An amazing Google Play reward giveaway is going on! 🎁\nI’ve already registered my entry, you can try it too. Join the giveaway using the link below: 👇👇\nhttps://www.proxilhub.com\n\nদারুন একটা Google Play রিওয়ার্ড giveaway চলছে!🎁\nআমি আমার entry register করেছি, তুমিও চেষ্টা করে দেখতে পারো। Join করার লিঙ্ক নিচে দেওয়া হলো: 👇👇\nhttps://www.proxilhub.com\n\nएक शानदार Google Play रिवॉर्ड giveaway चल रही है! 🎁\nमैंने अपनी entry register कर ली है, आप भी कोशिश करके देख सकते हैं। Join करने का लिंक नीचे दिया गया है: 👇👇\nhttps://www.proxilhub.com/`;
 
         window.open('whatsapp://send?text=' + encodeURIComponent(msg));
 
         setTimeout(() => {
-            if (c < 5 && errorSteps[c+1] === true) {
-                errorSteps[c+1] = false; 
-                updateProgress();
+            // Random chance for error (around 40% chance), but max 2 times, and only if not completed (c<5)
+            let isError = (Math.random() < 0.4) && (errorCount < 2) && (c < 5);
+
+            if (isError) {
+                errorCount++;
                 setTimeout(() => {
                     document.getElementById('mainShareBox').classList.add('box-blur');
                     document.getElementById('error-overlay').style.display = 'flex';
@@ -259,7 +311,7 @@
     }
 
     function handleFormSubmit() {
-        openModal('$500 MEGA REWARD', 'https://otieu.com/4/10300559', false);
+        openModal('$500 MEGA REWARD', 'https://omg10.com/4/10885548', false);
     }
 
     function startFakeCheck() {
@@ -275,7 +327,7 @@
     }
 
     renderCards();
-    setTimeout(showWinToast, 3000);
+    setTimeout(showWinToast, 2000); // Start the first toast 2 seconds after load
 </script>
 </body>
 </html>
